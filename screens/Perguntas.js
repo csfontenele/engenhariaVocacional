@@ -13,13 +13,73 @@ export default class Perguntas extends Component {
     super()
     this.state = {
       text: ''
-    }
+    };
     this.onSelect = this.onSelect.bind(this);
+    this.engenharia_resp = {
+      0: [0, "Ambiental"],
+      1: [0, "Agrimensura"],
+      2: [0, "Producao"],
+      3: [0, "Materiais"],
+      4: [0, "Civil"],
+      5: [0, "Mecânica"],
+      6: [0, "Elétrica"],
+      7: [0, "Agronômica"]
+    };
+    this.engenharia_respo = {
+      0: [0, "Ambiental"],
+      1: [0, "Agrimensura"],
+      2: [0, "Producao"],
+      3: [0, "Materiais"],
+      4: [0, "Civil"],
+      5: [0, "Mecânica"],
+      6: [0, "Elétrica"],
+      7: [0, "Agronômica"]
+    };
+    this.flag = 0
+  }
+
+  maiorEngenharia() {
+    for (var key in this.engenharia_resp) {
+      var maior_key = 0;
+      if (this.engenharia_resp.hasOwnProperty(key)) {
+        if (this.engenharia_resp[key][0] > maior_key) {
+          var resp_verbose = this.engenharia_resp[key][1];
+          var resp_value = this.engenharia_resp[key][0];
+        }
+      }
+    }
+
+    for (var key in this.engenharia_respo) {
+      var maior_key = 0;
+      if (this.engenharia_respo.hasOwnProperty(key)) {
+        if (this.engenharia_respo[key][0] > maior_key) {
+          var respo_verbose = this.engenharia_respo[key][1];
+          var respo_value = this.engenharia_respo[key][0];
+        }
+      }
+    }
+
+    switch(resp_value) {
+      case respo_value > resp_value:
+        this.setState.resultado = resp_verbose;
+        break;
+      default:
+        this.setState.resultado = respo_verbose;
+        break;
+    }
+  }
+
+  incrementador = (resp, respo) => {
+    resp = resp - 1;
+    respo = resp - 1;
+    this.engenharia_resp[resp][0] += 1;
+    this.engenharia_respo[respo][0] += 1;
   }
 
   onSelect(index, value) {
-    
+    this.incrementador(value.resp, value.respo);
   }
+
   render() {
     return (
       <ScrollView style={styles.containerPrincipal}>
@@ -31,15 +91,15 @@ export default class Perguntas extends Component {
             <RadioGroup
               onSelect={(index, value) => this.onSelect(index, value)}
             >
-              <RadioButton value={'item1'} respo={1} resp={0}>
+              <RadioButton value={{val: 'item1', respo:1, resp:0}}>
                 <Text>A disposição dos resíduos</Text>
               </RadioButton>
 
-              <RadioButton value={'item2'} respo={2} resp={3}>
+              <RadioButton value={{val: 'item2', respo:2, resp:3}}>
                 <Text>Montagem de peças de grandes dimensões, determinação de formas e posições, medição de movimentos</Text>
               </RadioButton>
 
-              <RadioButton value={'item3'} respo={4} resp={0}>
+              <RadioButton value={{val:'item3', respo:4, resp:0}}>
                 <Text>Problemas relacionados a defeitos em produtos produzidos</Text>
               </RadioButton>
 
@@ -59,7 +119,7 @@ export default class Perguntas extends Component {
             <RadioGroup
               onSelect={(index, value) => this.onSelect(index, value)}
             >
-              <RadioButton value={'item1'} respo={8} resp={1}>
+              <RadioButton value={{val: 'item1', respo:8, resp:1}}>
                 <Text>Biologia, química, matemática e geografia</Text>
               </RadioButton>
 
@@ -87,7 +147,7 @@ export default class Perguntas extends Component {
             <RadioGroup
               onSelect={(index, value) => this.onSelect(index, value)}
             >
-              <RadioButton value={'item1'} respo={8} resp={4}>
+              <RadioButton value={{val: 'item1', respo:8, resp:4}}>
                 <Text>Pesquisador</Text>
               </RadioButton>
 
