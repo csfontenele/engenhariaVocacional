@@ -1,21 +1,35 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
+
+import HomeScreen from './screens/Home';
+import Perguntas from './screens/Perguntas';
+import Resultado from './screens/Resultado';
+
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    TelaPerguntas: Perguntas,
+    TelaResultado: Resultado
+  },
+  {
+    initialRouteName: 'Home',
+    defaultNavigationOptions: {
+      title: 'Engenharia Vocacional',
+      headerStyle: {
+        backgroundColor: '#483D8B',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
 
 export default class App extends React.Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
+    return (<AppContainer />);
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
